@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample data points
+x_data = np.linspace(0, 10, 100)
+y_data = 3 * x_data + 2 + np.random.normal(0, 1, x_data.size)
+
+# Linear regression using polynomial fitting of degree 1
+coefficients = np.polyfit(x_data, y_data, 1)
+slope, intercept = coefficients
+
+print("Coefficient (slope):", slope)
+print("Intercept:", intercept)
+
+# Plotting the results
+plt.scatter(x_data, y_data, label='Data')
+plt.plot(x_data, np.polyval(coefficients, x_data), color='red', label='Fitted line')
+plt.legend()
+plt.show()

@@ -1,0 +1,46 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample data points
+x_data = np.array([0, 1, 2, 3, 4, 5])
+y_data = np.array([0, 1, 4, 9, 16, 25])
+
+# Number of intervals
+n_intervals = len(x_data) - 1
+
+# Function to calculate coefficients for cubic polynomial between two points
+def compute_coefficients(x0, y0, x1, y1):
+    # We'll solve for coefficients a, b, c, d of the polynomial y = ax^3 + bx^2 + cx + d
+    # This system is overdetermined, so a simple linear fit is done in each interval
+    A = np.array([
+        [x0**3, x0**2, x0, 1],
+        [x1**3, x1**2, x1, 1],
+        [3*x0**2, 2*x0, 1, 0],
+        [3*x1**2, 2*x1, 1, 0]
+    ])
+    B = np.array([y0, y1, 0, 0])  # Set derivatives to zero for simplicity
+    return np.linalg.solve(A, B)
+
+# List to store coefficients for each interval
+coefficients = []
+
+# Compute coefficients for each interval
+for i in range(n_intervals):
+    coefs = compute_coefficients(x_data[i], y_data[i], x_data[i+1], y_data[i+1])
+    coefficients.append(coefs)
+
+# Evaluate the spline
+x = np.linspace(x_data[0], x_data[-1], 500)
+y = np.zeros_like(x)
+
+# Find corresponding interval for each x
+for i in range(n_intervals):
+    mask = (x >= x_data[i]) & (x <= x_data[i+1])
+    coefs = coefficients[i]
+    y[mask] = np.polyval(coefs, x[mask])
+
+# Plotting the results
+plt.scatter(x_data, y_data, label='Data')
+plt.plot(x, y, label='Spline interpolation')
+plt.legend()
+plt.show()

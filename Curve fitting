@@ -1,0 +1,23 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the model function
+def model(x, a, b, c):
+    return a * x**2 + b * x + c
+
+# Sample data points
+x_data = np.linspace(0, 10, 100)
+y_data = model(x_data, 2, 3, 4) + np.random.normal(0, 5, x_data.size)
+
+# Curve fitting using polynomial fitting of degree 2
+coefficients = np.polyfit(x_data, y_data, 2)
+a, b, c = coefficients
+
+print("Fitted parameters:", a, b, c)
+
+# Plotting the results
+plt.scatter(x_data, y_data, label='Data')
+plt.plot(x_data, np.polyval(coefficients, x_data), color='red', label='Fitted curve')
+plt.legend()
+plt.show()
+

@@ -1,0 +1,20 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return x**2 + 3*x + 2
+
+# Points at which to evaluate the derivative
+x = np.linspace(0, 10, 100)
+
+# Numerical differentiation using finite differences
+dx = x[1] - x[0]
+df = np.diff(f(x)) / dx
+
+# To make df and x the same length for plotting
+x = x[:-1]
+
+plt.plot(x, df, label='Numerical Derivative')
+plt.legend()
+plt.show()
+

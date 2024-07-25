@@ -1,0 +1,24 @@
+def f(x):
+    # Example function to integrate
+    return x**2
+
+def trapezoidal_rule(a, b, n):
+    # a: lower limit of integration
+    # b: upper limit of integration
+    # n: number of trapezoids
+    h = (b - a) / n
+    sum = 0.5 * (f(a) + f(b))
+    
+    for i in range(1, n):
+        sum += f(a + i * h)
+    
+    integral = sum * h
+    return integral
+
+# Example usage
+a = 0  # lower limit
+b = 1  # upper limit
+n = 100  # number of trapezoids
+
+result = trapezoidal_rule(a, b, n)
+print("The integral of the function from", a, "to", b, "is approximately:", result)

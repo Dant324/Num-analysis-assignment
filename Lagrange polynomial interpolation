@@ -1,0 +1,17 @@
+import numpy as np
+
+def lagrange_interpolation(x_points, y_points):
+    def lagrange_basis(i, x):
+        terms = [(x - x_points[j]) / (x_points[i] - x_points[j]) for j in range(len(x_points)) if j != i]
+        return np.prod(terms, axis=0)
+
+    def lagrange_polynomial(x):
+        return sum(y_points[i] * lagrange_basis(i, x) for i in range(len(x_points)))
+
+    return lagrange_polynomial
+
+# Example usage:
+x_points = np.array([1, 2, 3, 4])
+y_points = np.array([1, 4, 9, 16])
+
+lagrange_poly = lagrange_interpolation(x_points, y_points)

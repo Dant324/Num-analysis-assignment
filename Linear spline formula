@@ -1,0 +1,11 @@
+# Coordinates of the points
+x1, y1 = 2.00, 7.2
+x2, y2 = 4.25, 7.1
+
+# Point of interest
+x = 4.0
+
+# Linear interpolation formula
+y = y1 + ((x - x1) * (y2 - y1)) / (x2 - x1)
+
+y
